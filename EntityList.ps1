@@ -18,8 +18,8 @@ Function DeployEntityList([string] $itemRelativePath)
             $websiteNameForQuery = $Script:_config.PortalWebsiteName
         }
 
-        $entityListQuery = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::GetQueryForEntityLists($entityListNamesToQuery, $websiteNameForQuery)
-        $matchingEntityLists = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::QueryCRM($entityListQuery)
+        $entityListQuery = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::GetQueryForEntityLists($entityListNamesToQuery, $websiteNameForQuery)
+        $matchingEntityLists = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::QueryCRM($entityListQuery)
 
         If ($matchingEntityLists.Entities.Count -eq 0)
         {
@@ -55,7 +55,7 @@ Function DeployEntityList([string] $itemRelativePath)
 Function UpdateEntityList([string] $itemRelativePath, [Microsoft.Xrm.Sdk.Entity] $entityListRecordToUpdate, [ref][bool] $updatePerformed)
 {
     $fileName = [IO.Path]::GetFileName($itemRelativePath)
-    $itemExtension = [BNH.BNH_CRM_Debugging.Managers.FileNameInfoProvider]::ResolveFileExtension($fileName)
+    $itemExtension = [BNH.CRMQuickDeploy.Core.Managers.FileNameInfoProvider]::ResolveFileExtension($fileName)
     $contentToDeploy = GetItemContent $itemRelativePath
     
     $updateEntity = New-Object Microsoft.Xrm.Sdk.Entity -ArgumentList $entityListRecordToUpdate.LogicalName, $entityListRecordToUpdate.Id
@@ -80,5 +80,5 @@ Function UpdateEntityList([string] $itemRelativePath, [Microsoft.Xrm.Sdk.Entity]
 Function GetEntityListNameFromItemRelativePath([string] $itemRelativePath)
 {
     $fileName = [IO.Path]::GetFileName($itemRelativePath)
-    return [BNH.BNH_CRM_Debugging.Managers.FileNameInfoProvider]::ResolveFileNameWithoutExtension($fileName)
+    return [BNH.CRMQuickDeploy.Core.Managers.FileNameInfoProvider]::ResolveFileNameWithoutExtension($fileName)
 }

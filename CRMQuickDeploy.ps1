@@ -103,15 +103,15 @@ Function InitialiseCrmManager([string] $connectionString)
         $Script:_crmManager = $crmManager
     }
 
-    [BNH.BNH_CRM_Debugging.Managers.CRMManager]::BeginInitialise($connectionString, $initialisationCallback)
+    [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::BeginInitialise($connectionString, $initialisationCallback)
 }
 
 Function GetWebsiteAndAssertFound([string] $websiteName)
 {
     WriteInfo "Retrieving the website '$websiteName' from CRM"
 
-    $websiteQuery = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::GetQueryForPortalWebsite($websiteName)
-    $websites = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::QueryCRM($websiteQuery)
+    $websiteQuery = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::GetQueryForPortalWebsite($websiteName)
+    $websites = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::QueryCRM($websiteQuery)
 
     If ($websites.Entities.Count -eq 0)
     {
@@ -125,8 +125,8 @@ Function GetPublishedPublishingStateAndAssertFound()
 {
     WriteInfo "Retrieving the publishing state 'Published' from CRM"
 
-    $publishingStateQuery = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::GetQueryForPublishingState("Published", $Script:_targetWebsite.Id)
-    $states = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::QueryCRM($publishingStateQuery)
+    $publishingStateQuery = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::GetQueryForPublishingState("Published", $Script:_targetWebsite.Id)
+    $states = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::QueryCRM($publishingStateQuery)
 
     If ($states.Entities.Count -eq 0)
     {
@@ -138,8 +138,8 @@ Function GetPublishedPublishingStateAndAssertFound()
 
 Function TryGetConfiguredWebsite()
 {
-    $websiteQuery = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::GetQueryForPortalWebsite($Script:_config.PortalWebsiteName)
-    $websites = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::QueryCRM($websiteQuery)
+    $websiteQuery = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::GetQueryForPortalWebsite($Script:_config.PortalWebsiteName)
+    $websites = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::QueryCRM($websiteQuery)
 
     If ($websites.Entities.Count -eq 0)
     {
@@ -355,7 +355,7 @@ Function LoadAssemblies()
     [Reflection.Assembly]::LoadFrom("$PSScriptRoot\Assemblies\Microsoft.Crm.Sdk.Proxy.dll") | Out-Null
     [Reflection.Assembly]::LoadFrom("$PSScriptRoot\Assemblies\Microsoft.Xrm.Sdk.Deployment.dll") | Out-Null
     [Reflection.Assembly]::LoadFrom("$PSScriptRoot\Assemblies\Microsoft.IdentityModel.Clients.ActiveDirectory.dll") | Out-Null
-    [Reflection.Assembly]::LoadFrom("$PSScriptRoot\Assemblies\CRMQuickDeploy.dll") | Out-Null
+    [Reflection.Assembly]::LoadFrom("$PSScriptRoot\Assemblies\BNH.CRMQuickDeploy.Core.dll") | Out-Null
 }
 
 Function WriteInfo([string] $message, [string] $foregroundColor = "white")
@@ -445,5 +445,5 @@ Finally
         $Script:_crmManager.Dispose()
     }
 
-    [BNH.BNH_CRM_Debugging.Managers.WebFileDeploymentSettingManager]::ClearCache()
+    [BNH.CRMQuickDeploy.Core.Managers.WebFileDeploymentSettingManager]::ClearCache()
 }

@@ -44,8 +44,8 @@ Function DeployWebForm([string] $itemRelativePath, [bool] $useProvidedItemConten
         $websiteNameForQuery = $Script:_config.PortalWebsiteName
     }
 
-    $webFormQuery = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::GetQueryForWebForms($webFormNamesToQuery, $websiteNameForQuery)
-    $matchingWebForms = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::QueryCRM($webFormQuery)
+    $webFormQuery = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::GetQueryForWebForms($webFormNamesToQuery, $websiteNameForQuery)
+    $matchingWebForms = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::QueryCRM($webFormQuery)
 
     If ($matchingWebForms.Entities.Count -eq 0)
     {
@@ -94,8 +94,8 @@ Function UpdateWebForm([string] $itemRelativePath, [Microsoft.Xrm.Sdk.Entity] $w
     $webFormStepNamesToQuery = New-Object System.Collections.Generic.List[string]
     $webFormStepNamesToQuery.Add($webFormStepName)
 
-    $webFormStepQuery = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::GetQueryForWebFormSteps($webFormStepNamesToQuery, $webFormName)
-    $matchingWebFormSteps = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::QueryCRM($webFormStepQuery)
+    $webFormStepQuery = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::GetQueryForWebFormSteps($webFormStepNamesToQuery, $webFormName)
+    $matchingWebFormSteps = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::QueryCRM($webFormStepQuery)
 
     If ($matchingWebFormSteps.Entities.Count -eq 0)
     {
@@ -106,7 +106,7 @@ Function UpdateWebForm([string] $itemRelativePath, [Microsoft.Xrm.Sdk.Entity] $w
     $webFormStepRecordToUpdate = $matchingWebFormSteps.Entities[0]
 
     $fileName = [IO.Path]::GetFileName($itemRelativePath)
-    $itemExtension = [BNH.BNH_CRM_Debugging.Managers.FileNameInfoProvider]::ResolveFileExtension($fileName)
+    $itemExtension = [BNH.CRMQuickDeploy.Core.Managers.FileNameInfoProvider]::ResolveFileExtension($fileName)
     
     $updateEntity = New-Object Microsoft.Xrm.Sdk.Entity -ArgumentList $webFormStepRecordToUpdate.LogicalName, $webFormStepRecordToUpdate.Id
 
@@ -137,5 +137,5 @@ Function GetWebFormNameFromItemRelativePath([string] $itemRelativePath)
 Function GetWebFormStepNameFromItemRelativePath([string] $itemRelativePath)
 {
     $fileName = [IO.Path]::GetFileName($itemRelativePath)
-    return [BNH.BNH_CRM_Debugging.Managers.FileNameInfoProvider]::ResolveFileNameWithoutExtension($fileName)
+    return [BNH.CRMQuickDeploy.Core.Managers.FileNameInfoProvider]::ResolveFileNameWithoutExtension($fileName)
 }

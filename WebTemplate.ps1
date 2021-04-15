@@ -18,8 +18,8 @@
             $websiteNameForQuery = $Script:_config.PortalWebsiteName
         }
 
-        $webTemplateQuery = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::GetQueryForWebTemplates($webTemplateNamesToQuery, $websiteNameForQuery)
-        $matchingWebTemplates = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::QueryCRM($webTemplateQuery)
+        $webTemplateQuery = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::GetQueryForWebTemplates($webTemplateNamesToQuery, $websiteNameForQuery)
+        $matchingWebTemplates = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::QueryCRM($webTemplateQuery)
 
         If ($matchingWebTemplates.Entities.Count -eq 0)
         {

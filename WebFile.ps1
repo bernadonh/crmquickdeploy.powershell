@@ -1,6 +1,6 @@
 Function MarkWebFileDeploymentSettingsFileForRefresh()
 {
-    [BNH.BNH_CRM_Debugging.Managers.WebFileDeploymentSettingManager]::ClearCache()
+    [BNH.CRMQuickDeploy.Core.Managers.WebFileDeploymentSettingManager]::ClearCache()
     WriteInfo "Invalidated the web file deployment settings cache" "Cyan"
 }
 
@@ -10,7 +10,7 @@ Function DeployWebFile([string] $itemRelativePath)
     {
         WriteInfo "Deploying '$itemRelativePath'" "DarkGray"
 
-        $deploymentSettings = [BNH.BNH_CRM_Debugging.Managers.WebFileDeploymentSettingManager]::GetDeploymentSettingsForFolder("$Script:_pathToWatch\$Script:_webFileFolderName")
+        $deploymentSettings = [BNH.CRMQuickDeploy.Core.Managers.WebFileDeploymentSettingManager]::GetDeploymentSettingsForFolder("$Script:_pathToWatch\$Script:_webFileFolderName")
 
         If ($deploymentSettings -eq $null)
         {
@@ -37,8 +37,8 @@ Function DeployWebFile([string] $itemRelativePath)
         $parentWebPageNamesToQuery = New-Object System.Collections.Generic.List[string]
         $parentWebPageNamesToQuery.Add($itemDeploymentSettings.ParentPage)
 
-        $parentWebPageQuery = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::GetQueryForWebPages($parentWebPageNamesToQuery, $Script:_targetWebsite.Id, $Script:_config.IsPortalv7)
-        $matchingParentWebPages = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::QueryCRM($parentWebPageQuery)
+        $parentWebPageQuery = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::GetQueryForWebPages($parentWebPageNamesToQuery, $Script:_targetWebsite.Id, $Script:_config.IsPortalv7)
+        $matchingParentWebPages = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::QueryCRM($parentWebPageQuery)
 
         If ($matchingParentWebPages.Entities.Count -eq 0)
         {
@@ -51,15 +51,15 @@ Function DeployWebFile([string] $itemRelativePath)
         $webFileNamesToQuery = New-Object System.Collections.Generic.List[string]
         $webFileNamesToQuery.Add($itemDeploymentSettings.TargetName)
 
-        $webFileQuery = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::GetQueryForWebFiles($webFileNamesToQuery, $Script:_targetWebsite.Id)
-        $matchingWebFiles = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::QueryCRM($webFileQuery)
+        $webFileQuery = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::GetQueryForWebFiles($webFileNamesToQuery, $Script:_targetWebsite.Id)
+        $matchingWebFiles = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::QueryCRM($webFileQuery)
 
         $itemDeploymentSettings.PublishingStateId = $Script:_publishedPublishingState.Id
 
         $itemFileName = [IO.Path]::GetFileName($itemRelativePath)
-        If ([BNH.BNH_CRM_Debugging.Managers.FileNameInfoProvider]::IsCompilableItem($itemFileName))
+        If ([BNH.CRMQuickDeploy.Core.Managers.FileNameInfoProvider]::IsCompilableItem($itemFileName))
         {
-            $itemDeploymentSettings.LocalFileName = [BNH.BNH_CRM_Debugging.Managers.FileNameInfoProvider]::GetCompilableOutputFileName($itemFileName)
+            $itemDeploymentSettings.LocalFileName = [BNH.CRMQuickDeploy.Core.Managers.FileNameInfoProvider]::GetCompilableOutputFileName($itemFileName)
         }
         Else
         {
@@ -81,7 +81,7 @@ Function DeployWebFile([string] $itemRelativePath)
     }
 }
 
-Function CreateWebFile([string] $itemRelativePath, [BNH.BNH_CRM_Debugging.Model.WebFileItemDeploymentSettings] $itemDeploymentSettings)
+Function CreateWebFile([string] $itemRelativePath, [BNH.CRMQuickDeploy.Core.Model.WebFileItemDeploymentSettings] $itemDeploymentSettings)
 {
     $webFileSource = GetItemContent $itemRelativePath
 
@@ -89,7 +89,7 @@ Function CreateWebFile([string] $itemRelativePath, [BNH.BNH_CRM_Debugging.Model.
     WriteInfo "Created web file '$($itemDeploymentSettings.TargetName)'"
 }
 
-Function UpdateWebFile([string] $itemRelativePath, [BNH.BNH_CRM_Debugging.Model.WebFileItemDeploymentSettings] $itemDeploymentSettings, [Microsoft.Xrm.Sdk.Entity] $webFileRecordToUpdate)
+Function UpdateWebFile([string] $itemRelativePath, [BNH.CRMQuickDeploy.Core.Model.WebFileItemDeploymentSettings] $itemDeploymentSettings, [Microsoft.Xrm.Sdk.Entity] $webFileRecordToUpdate)
 {
     $webFileSource = GetItemContent $itemRelativePath
 

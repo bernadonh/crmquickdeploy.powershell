@@ -45,8 +45,8 @@ Function DeployWebPage([string] $itemRelativePath, [bool] $useProvidedItemConten
         }
     }
 
-    $webPageQuery = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::GetQueryForWebPages($webPageNamesToQuery, $languageNamesToQuery, $Script:_config.PortalWebsiteName)
-    $matchingWebPages = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::QueryCRM($webPageQuery)
+    $webPageQuery = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::GetQueryForWebPages($webPageNamesToQuery, $languageNamesToQuery, $Script:_config.PortalWebsiteName)
+    $matchingWebPages = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::QueryCRM($webPageQuery)
 
     If ($matchingWebPages.Entities.Count -eq 0)
     {
@@ -84,7 +84,7 @@ Function DeployWebPage([string] $itemRelativePath, [bool] $useProvidedItemConten
 Function UpdateWebPage([string] $itemRelativePath, [Microsoft.Xrm.Sdk.Entity] $webPageRecordToUpdate, [bool] $useProvidedItemContent, [string] $itemContent, [ref][bool] $updatePerformed)
 {
     $fileName = [IO.Path]::GetFileName($itemRelativePath)
-    $itemExtension = [BNH.BNH_CRM_Debugging.Managers.FileNameInfoProvider]::ResolveFileExtension($fileName)
+    $itemExtension = [BNH.CRMQuickDeploy.Core.Managers.FileNameInfoProvider]::ResolveFileExtension($fileName)
 
     If ($useProvidedItemContent)
     {
@@ -128,5 +128,5 @@ Function UpdateWebPage([string] $itemRelativePath, [Microsoft.Xrm.Sdk.Entity] $w
 Function GetWebPageNameFromItemRelativePath([string] $itemRelativePath)
 {
     $fileName = [IO.Path]::GetFileName($itemRelativePath)
-    return [BNH.BNH_CRM_Debugging.Managers.FileNameInfoProvider]::ResolveFileNameWithoutExtension($fileName)
+    return [BNH.CRMQuickDeploy.Core.Managers.FileNameInfoProvider]::ResolveFileNameWithoutExtension($fileName)
 }

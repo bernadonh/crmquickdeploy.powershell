@@ -38,8 +38,8 @@ Function DeployEntityForm([string] $itemRelativePath, [bool] $useProvidedItemCon
         $websiteNameForQuery = $Script:_config.PortalWebsiteName
     }
 
-    $entityFormQuery = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::GetQueryForEntityForms($entityFormNamesToQuery, $websiteNameForQuery)
-    $matchingEntityForms = [BNH.BNH_CRM_Debugging.Managers.CRMManager]::QueryCRM($entityFormQuery)
+    $entityFormQuery = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::GetQueryForEntityForms($entityFormNamesToQuery, $websiteNameForQuery)
+    $matchingEntityForms = [BNH.CRMQuickDeploy.Core.Managers.CRMManager]::QueryCRM($entityFormQuery)
 
     If ($matchingEntityForms.Entities.Count -eq 0)
     {
@@ -73,7 +73,7 @@ Function DeployEntityForm([string] $itemRelativePath, [bool] $useProvidedItemCon
 Function UpdateEntityForm([string] $itemRelativePath, [Microsoft.Xrm.Sdk.Entity] $entityFormRecordToUpdate, [bool] $useProvidedItemContent, [string] $itemContent, [ref][bool] $updatePerformed)
 {
     $fileName = [IO.Path]::GetFileName($itemRelativePath)
-    $itemExtension = [BNH.BNH_CRM_Debugging.Managers.FileNameInfoProvider]::ResolveFileExtension($fileName)
+    $itemExtension = [BNH.CRMQuickDeploy.Core.Managers.FileNameInfoProvider]::ResolveFileExtension($fileName)
 
     If ($useProvidedItemContent)
     {
@@ -107,5 +107,5 @@ Function UpdateEntityForm([string] $itemRelativePath, [Microsoft.Xrm.Sdk.Entity]
 Function GetEntityFormNameFromItemRelativePath([string] $itemRelativePath)
 {
     $fileName = [IO.Path]::GetFileName($itemRelativePath)
-    return [BNH.BNH_CRM_Debugging.Managers.FileNameInfoProvider]::ResolveFileNameWithoutExtension($fileName)
+    return [BNH.CRMQuickDeploy.Core.Managers.FileNameInfoProvider]::ResolveFileNameWithoutExtension($fileName)
 }
