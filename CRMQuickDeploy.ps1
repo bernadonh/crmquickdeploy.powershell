@@ -348,6 +348,11 @@ Function SetupWatcher([string] $path)
     }
 }
 
+Function ConfigureProxySettings()
+{
+    [Net.WebRequest]::DefaultWebProxy.Credentials = [Net.CredentialCache]::DefaultNetworkCredentials
+}
+
 Function LoadAssemblies()
 {
     [Reflection.Assembly]::LoadFrom("$PSScriptRoot\Assemblies\Microsoft.Xrm.Tooling.Connector.dll") | Out-Null
@@ -414,6 +419,7 @@ $Script:_version = "v1.0"
 
 Write-Host "`n---------- CRMQuickDeploy Powershell ($Script:_version)----------"
 
+ConfigureProxySettings
 LoadAssemblies
 $Script:_config = GetConfigurationAndAssertValid "$Script:_pathToWatch\crmquickdeploy.powershell.config" "$Script:_pathToWatch\crmquickdeploy.powershell.user.config"
 InitialiseCrmManager $Script:_config.CRMConnectionString
