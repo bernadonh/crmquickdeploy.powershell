@@ -31,3 +31,7 @@ The script requires a configuration file, namely **crmquickdeploy.powershell.con
 You can optionally create a user-specific configuration file, namely **crmquickdeploy.powershell.user.config**. This file has the same schema as the configuration file above, and any value specified in this file will override the corresponding value in the main configuration file.
 
 A use case for this file is where your dev team has a dedicated sandbox CRM instance for each developer. You can have the main configuration file points to the main dev/integration CRM instance and check this into source-control. Each developer can then create their own user configuration file to override the CRM connection string, and exclude this user configuration file from source-control.
+
+# Running the script
+1. Download the code and unzip. The package contains the main script, supporting scripts and supporting assemblies.
+2. 
