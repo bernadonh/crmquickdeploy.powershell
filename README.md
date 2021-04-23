@@ -3,7 +3,7 @@ The Powershell version of CRMQuickDeploy (https://bernado-nguyen-hoan.com/2014/1
 
 This script only works with Dynamics/PowerApps Portal artefacts, including JS, HTML, CSS and Liquid for web pages, web templates, entity forms, entity lists, web forms and web files.
 
-You specify a folder to watch when launching the script. The structure for this folder should be as described at https://bernado-nguyen-hoan.com/2017/08/17/source-control-adxstudiocrm-portal-js-css-and-liquid-with-crmquickdeploy/, and is summarised below.
+You specify a folder to watch when launching the script. You must structure this folder and its contents in a certain way so that the script can recognise the types of artefacts and how to map them to records in CRM. This is described in depth at https://bernado-nguyen-hoan.com/2017/08/17/source-control-adxstudiocrm-portal-js-css-and-liquid-with-crmquickdeploy/ and is also summarised below.
 
 Connection string to CRM is defined in a file, namely **crmquickdeploy.powershell.config**, which should also be located at the folder being watched by the script. This file is described in more details below.
 
@@ -21,9 +21,9 @@ The script requires a configuration file, namely **crmquickdeploy.powershell.con
 
 `CRMConnectionString`: Connection string used to connect to CRM. Refer to this post for examples of supported connection strings: https://bernado-nguyen-hoan.com/2021/02/26/crmquickdeploy-now-supports-clientid-secret-and-mfa/.
 
-`IsPortalv7`: 
+`IsPortalv7`: Specify whether your target portal is version 7. If you are targeting Dynamics/PowerApps Portal on cloud, then specify `false`.
 
-`PortalWebsiteName`:
+`PortalWebsiteName`: The name of the 
 
 `UseFolderAsWebPageLanguage`:
 
@@ -34,4 +34,10 @@ A use case for this file is where your dev team has a dedicated sandbox CRM inst
 
 # Running the script
 1. Download the code and unzip. The package contains the main script, supporting scripts and supporting assemblies.
-2. 
+2. Create the folder to watch and create the configuration file as described above.
+3. Run the script using the following:
+
+```
+. .\crmquickdeploy.ps1 -FolderToWatch "[full path to folder to watch]"
+```
+**IMPORTANT**: You must launch the script using the . syntax as above.
