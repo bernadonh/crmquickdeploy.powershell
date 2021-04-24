@@ -44,3 +44,15 @@ A use case for this file is where your dev team has a dedicated sandbox CRM inst
 
 # Organising your watch folder
 Contents under the folder being watched must be organised in a certain way so that the script can recognise the type of artefacts being deployed and their corresponding target records in CRM. This is described in depth in this post: https://bernado-nguyen-hoan.com/2017/08/17/source-control-adxstudiocrm-portal-js-css-and-liquid-with-crmquickdeploy/, and below is a summary.
+
+1. Files should be placed in subfolders underneath the folder being watched. These subfolders represent the target entity types (e.g. entity form, entity list, web page, etc.) in CRM. Name these subfolders as follow:
+    1. `PortalWebPages`
+    2. `PortalWebTemplates`
+    3. `PortalEntityForms`
+    4. `PortalEntityLists`
+    5. `PortalWebForms`
+    6. `PortalWebFiles`
+2. Web Forms require additional subfolders underneath the `PortalWebForms` folder. Refer to the post above for more details.
+3. With exception of Web Files, the file name of a file identifies the name of the 
+
+3.Place your files into subfolders underneath the folder being watched
