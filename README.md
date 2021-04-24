@@ -23,9 +23,9 @@ The script requires a configuration file, namely **crmquickdeploy.powershell.con
 
 `IsPortalv7`: Specify whether your target portal is version 7. If you are targeting Dynamics/PowerApps Portal on cloud, then specify `false`.
 
-`PortalWebsiteName`: The name of the 
+`PortalWebsiteName`: Specify the name of the Website record in CRM that represents your target portal.
 
-`UseFolderAsWebPageLanguage`:
+`UseFolderAsWebPageLanguage`: Specify whether subfolders under the `PortalWebPages` folder are used to determine the language of target web pages. Refer to this post for more details: https://bernado-nguyen-hoan.com/2018/08/08/better-support-for-localised-portal-web-pages-in-new-version-of-crmquickdeploy/. Recommended value is `true`.
 
 # User configuration file
 You can optionally create a user-specific configuration file, namely **crmquickdeploy.powershell.user.config**. This file has the same schema as the configuration file above, and any value specified in this file will override the corresponding value in the main configuration file.
@@ -40,4 +40,7 @@ A use case for this file is where your dev team has a dedicated sandbox CRM inst
 ```
 . .\crmquickdeploy.ps1 -FolderToWatch "[full path to folder to watch]"
 ```
-**IMPORTANT**: You must launch the script using the . syntax as above.
+**IMPORTANT**: You must launch the script using the `.` syntax as above.
+
+# Organising your watch folder
+Contents under the folder being watched must be organised in a certain way so that the script can recognise the type of artefacts being deployed and their corresponding target records in CRM. This is described in depth in this post: https://bernado-nguyen-hoan.com/2017/08/17/source-control-adxstudiocrm-portal-js-css-and-liquid-with-crmquickdeploy/, and below is a summary.
