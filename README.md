@@ -8,7 +8,7 @@ You specify a folder to watch when launching the script. You must structure this
 Connection string to CRM is defined in a file, namely **crmquickdeploy.powershell.config**, which should also be located at the folder being watched by the script. This file is described in more details below.
 
 # Configuration file 
-The script requires a configuration file, namely **crmquickdeploy.powershell.config** to be located at the folder being watched. The content of this file should be as followed:
+The script requires a configuration file, namely **crmquickdeploy.powershell.config**, to be located at the folder being watched. The content of this file should be as followed:
 
 ```
 {
