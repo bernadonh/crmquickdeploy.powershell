@@ -53,7 +53,7 @@ Contents under the folder being watched must be organised in a certain way so th
     5. `PortalWebForms`
     6. `PortalWebFiles`
 2. Web Forms require additional subfolders underneath the `PortalWebForms` folder. Refer to the post above for more details.
-3. With exception of Web Files, the file name of a file identifies the name of the target record in CRM. The file extension identifies the 'part' of that record to update (.js for JavaScript, .css for CSS, .HTML for Liquid/HTML).
+3. With exception of Web Files, the file name of a file identifies the name of the target record in CRM. The file extension identifies the 'part' of that record to update (.js for JavaScript, .css for CSS, .html for Liquid/HTML).
 4. Web Files require an additional config file, namely **DeploymentSettings.xml**, to be placed in the `PortalWebFiles` folder.
 
 # Other features
