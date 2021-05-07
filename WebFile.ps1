@@ -83,7 +83,7 @@ Function DeployWebFile([string] $itemRelativePath)
 
 Function CreateWebFile([string] $itemRelativePath, [BNH.CRMQuickDeploy.Core.Model.WebFileItemDeploymentSettings] $itemDeploymentSettings)
 {
-    $webFileSource = GetItemContent $itemRelativePath
+    $webFileSource = GetItemContentAsBase64 $itemRelativePath
 
     $Script:_crmManager.CreateWebFile($itemDeploymentSettings, $Script:_targetWebsite.Id, $webFileSource)
     WriteInfo "Created web file '$($itemDeploymentSettings.TargetName)'"
@@ -91,7 +91,7 @@ Function CreateWebFile([string] $itemRelativePath, [BNH.CRMQuickDeploy.Core.Mode
 
 Function UpdateWebFile([string] $itemRelativePath, [BNH.CRMQuickDeploy.Core.Model.WebFileItemDeploymentSettings] $itemDeploymentSettings, [Microsoft.Xrm.Sdk.Entity] $webFileRecordToUpdate)
 {
-    $webFileSource = GetItemContent $itemRelativePath
+    $webFileSource = GetItemContentAsBase64 $itemRelativePath
 
     $Script:_crmManager.UpdateWebFile($webFileRecordToUpdate.Id, $itemDeploymentSettings, $webFileSource)
     WriteInfo "Updated web file '$($itemDeploymentSettings.TargetName)'"

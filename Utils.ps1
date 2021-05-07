@@ -10,6 +10,12 @@ Function GetItemContent([string] $itemRelativePath)
     return [Text.Encoding]::UTF8.GetString($contentBytes)
 }
 
+Function GetItemContentAsBase64([string] $itemRelativePath)
+{
+    $contentBytes = Get-Content "$Script:_pathToWatch\$itemRelativePath" -Encoding Byte -ReadCount 0
+    return [Convert]::ToBase64String($contentBytes)
+}
+
 Function GetItemRelativePathFromFullPath([string] $itemFullPath)
 {
     return $itemFullPath.Substring($Script:_pathToWatch.Length + 1)
