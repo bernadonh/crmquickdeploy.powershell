@@ -7,6 +7,16 @@ Function GetImmediateParentFolderName([string] $itemRelativePath)
 Function GetItemContent([string] $itemRelativePath)
 {
     $contentBytes = Get-Content "$Script:_pathToWatch\$itemRelativePath" -Encoding Byte -ReadCount 0
+
+    #Detect and remove BOM
+    If ($contentBytes.Length -gt 2)
+    {
+        If ($contentBytes[0] -eq 239 -and $contentBytes[1] -eq 187 -and $contentBytes[2] -eq 191)
+        {
+            $contentBytes = $contentBytes[3..($contentBytes.Length - 1)]
+        }
+    }
+
     return [Text.Encoding]::UTF8.GetString($contentBytes)
 }
 

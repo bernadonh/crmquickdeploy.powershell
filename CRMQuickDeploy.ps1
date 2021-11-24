@@ -415,7 +415,7 @@ $Script:_crmManager = $null
 $Script:_targetWebsite = $null
 $Script:_publishedPublishingState = $null
 
-$Script:_version = "v1.0"
+$Script:_version = "v1.1"
 
 Write-Host "`n---------- CRMQuickDeploy Powershell ($Script:_version)----------"
 
