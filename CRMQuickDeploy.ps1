@@ -201,6 +201,22 @@ Function HandleChangedEvent([EventArgs] $eventArgs)
 }
 
 ##itemRelativePath: Path of item relative to $Script:_pathToWatch.
+Function IsFile([string] $itemRelativePath)
+{
+    $itemAbsolutePath = "$Script:_pathToWatch\$itemRelativePath"
+    $item = Get-Item $itemAbsolutePath
+
+    If ($item.PSIsContainer -eq $true)
+    {
+        return $false
+    }
+    Else
+    {
+        return $true
+    }
+} 
+
+##itemRelativePath: Path of item relative to $Script:_pathToWatch.
 Function IsLinkItem([string] $itemRelativePath)
 {
     If ($itemRelativePath.StartsWith("$Script:_webPageFolderName\", [StringComparison]::OrdinalIgnoreCase) `
@@ -282,8 +298,9 @@ Function IsWebFileItem([string] $itemRelativePath)
 {
     If ($itemRelativePath.StartsWith("$Script:_webFileFolderName\", [StringComparison]::OrdinalIgnoreCase))
     {
-        return $true
+        return IsFile $itemRelativePath
     }
+
     return $false
 }
 
@@ -415,7 +432,7 @@ $Script:_crmManager = $null
 $Script:_targetWebsite = $null
 $Script:_publishedPublishingState = $null
 
-$Script:_version = "v1.1"
+$Script:_version = "v1.1.1"
 
 Write-Host "`n---------- CRMQuickDeploy Powershell ($Script:_version)----------"
 
