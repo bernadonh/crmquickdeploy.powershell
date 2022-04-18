@@ -198,6 +198,10 @@ Function HandleChangedEvent([EventArgs] $eventArgs)
     {
         DeployWebFormAndReferencingLinkItems $eventArgs.SourceArgs.Name
     }
+    ElseIf (IsContentSnippetItem $eventArgs.SourceArgs.Name)
+    {
+        DeployContentSnippet $eventArgs.SourceArgs.Name
+    }
 }
 
 ##itemRelativePath: Path of item relative to $Script:_pathToWatch.
@@ -329,6 +333,21 @@ Function IsWebTemplateItem([string] $itemRelativePath)
     return $false   
 }
 
+##itemRelativePath: Path of item relative to $Script:_pathToWatch.
+Function IsContentSnippetItem([string] $itemRelativePath)
+{
+    If ($itemRelativePath.StartsWith("$Script:_contentSnippetFolderName\", [StringComparison]::OrdinalIgnoreCase))
+    {
+        $itemExtension = [IO.Path]::GetExtension($itemRelativePath).ToLower()
+        
+        If ($itemExtension -eq ".html" -or $itemExtension -eq ".txt")
+        {
+            return $true
+        }
+    }
+    return $false   
+}
+
 Function SetupWatcher([string] $path)
 {
     ##https://powershell.one/tricks/filesystem/filesystemwatcher
@@ -411,6 +430,7 @@ $ErrorActionPreference = "Stop"
 . $PSScriptRoot\EntityForm.ps1
 . $PSScriptRoot\EntityList.ps1
 . $PSScriptRoot\WebForm.ps1
+. $PSScriptRoot\ContentSnippet.ps1
 
 ##Map that tracks the time (in ticks) an event was last handled for an item. This is used to skip duplicate
 ##events that may be fired by the watcher.
@@ -422,6 +442,7 @@ $Script:_webPageFolderName = "PortalWebPages"
 $Script:_entityFormFolderName = "PortalEntityForms"
 $Script:_entityListFolderName = "PortalEntityLists"
 $Script:_webFormFolderName = "PortalWebForms"
+$Script:_contentSnippetFolderName = "PortalContentSnippets"
 
 $Script:_webFileDeploymentSettingsFileName = "DeploymentSettings.xml"
 
@@ -432,7 +453,7 @@ $Script:_crmManager = $null
 $Script:_targetWebsite = $null
 $Script:_publishedPublishingState = $null
 
-$Script:_version = "v1.1.1"
+$Script:_version = "v1.2"
 
 Write-Host "`n---------- CRMQuickDeploy Powershell ($Script:_version)----------"
 
